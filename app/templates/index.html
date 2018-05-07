@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+<div>
+    <a href="{{ url_for('addtable') }}">Add Table</a>
+    <a href="{{ url_for('deletetable') }}">Delete Table</a>
+    <a href="{{ url_for('updatetable') }}">Update Table</a>
+</div>
+<table class="table table-hover">
+    <h1>Table: {{ table }}</h1>
+    <tr>
+    {% for attr in tableattributes[0] %}
+        <td>
+            <p text-align:center>{{ attr[0] }}</p>
+        </td>
+    {% endfor %}
+    </tr>
+    
+    {% for att in tableattributes %}
+    <tr>
+        {% for aat in att %}
+        {% if aat[0]=='name' %}
+        <td>
+            <a href="{{ url_for('points' ,tablename =  aat[1]) }}" >{{ aat[1] }} </a>
+        </td>
+        {% else %}
+        <td>
+            <p text-align:center>{{ aat[1] }}</p>
+        </td>
+        {% endif %}
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

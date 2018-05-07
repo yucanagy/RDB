@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}   
+<div>
+    <a href="{{ url_for('addpoint', tablename=tablename) }}">Add Poin</a>
+    <a href="{{ url_for('deletepoint', tablename=tablename) }}">Delete Point</a>
+    <a href="{{ url_for('updatapoint', tablename=tablename) }}">Update Point</a>
+</div>
+<table class="table table-hover">
+    <h1>Table: {{ tablename }}</h1>
+    <tr>
+        {% for col in columns %}
+        <td>
+            <p text-align:center>{{ col[0] }} </p>
+        </td>
+        {% endfor %}
+    </tr>
+    {% for point in points %}
+    <tr>
+        {% for bd in point %}
+        <td>
+            <p text-align:center>{{ bd[1] }} </p>
+        </td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
