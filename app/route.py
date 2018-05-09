@@ -161,5 +161,4 @@ def updatapoint(tablename):
         newpoint.datatype = form.datatype.data
         newpoint.address = form.address.data
         return redirect(url_for('points', tablename=tablename))
-    gg =1
     return render_template('addpoint.html', title='Update', form=form)
