@@ -1,10 +1,26 @@
-from flask import request, render_template, flash, redirect, url_for
+from flask import request, render_template, flash, redirect, url_for, get_flashed_messages
 import json
 from app import rdb, app
-from app.forms import AddTableForm, DeleteTableform, UpdateTableForm, AddPointForm, DeletePointform, UpdatePointForm
+from app.forms import AddTableForm, DeleteTableform, UpdateTableForm, AddPointForm, DeletePointform, UpdatePointForm, ConnectRDB
+
 
 
 @app.route('/', methods=['GET', 'POST'])
+def login():
+    if rdb.rdbState :
+        return redirect(url_for('index'))
+    else:
+        return redirect(url_for('connectRDB'))
+
+
+@app.route('/connectRDB', methods=['GET', 'POST'])
+def connectRDB():
+    form = ConnectRDB()
+    if form.validate_on_submit():
+        return redirect(url_for('index'))
+    return render_template('connectRDB.html', title='Connect RDB', form=form)
+
+
 @app.route('/index', methods=['GET', 'POST'])
 def index():
     tablenames = rdb.GetTablesName()
@@ -139,8 +155,6 @@ def deletepoint(tablename):
             flash('Delete' & name & 'failed')
         return redirect(url_for('points', tablename=tablename))                           
     return render_template('deletepoint.html', title='Delete Point', form=form)
-
-
 
 @app.route('/updatapoint/<tablename>', methods={'GET', 'POST'})
 def updatapoint(tablename):

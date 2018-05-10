@@ -1,38 +1,45 @@
 from suds.client import Client
+from flask import flash, get_flashed_messages
 import warnings
 
 class RDBAlchemy(object):
-    rdb = None
-    def __init__(self, app=None):
-        # if app is not None:
-        #     self.init_app(app)
-        self.rdb = Client('http://127.0.0.1:9001/docs')
-        self.ArrayOfCls_point = self.rdb.factory.create('ns0:ArrayOfCls_point')
-        self.ArrayOfCls_point_main = self.rdb.factory.create('ns0:ArrayOfCls_point_main')
-        self.ArrayOfCls_point_main_py = self.rdb.factory.create('ns0:ArrayOfCls_point_main_py')
-        self.ArrayOfKeyValueOfanyTypeanyType = self.rdb.factory.create('ns2:ArrayOfKeyValueOfanyTypeanyType')
-        self.ArrayOfTableAttributes = self.rdb.factory.create('ns0:ArrayOfTableAttributes')
-        self.ArrayOfanyType = self.rdb.factory.create('ns2:ArrayOfanyType')
-        self.ArrayOfint = self.rdb.factory.create('ns2:ArrayOfint')
-        self.ArrayOfstring = self.rdb.factory.create('ns2:ArrayOfstring')
-        self.Cls_point = self.rdb.factory.create('ns0:Cls_point')
-        self.Cls_point_main = self.rdb.factory.create('ns0:Cls_point_main')
-        self.Cls_point_main_py = self.rdb.factory.create('ns0:Cls_point_main_py')
-        self.TableAttributes = self.rdb.factory.create('ns0:TableAttributes')
-        self.char = self.rdb.factory.create('ns1:char')
-        self.duration = self.rdb.factory.create('ns1:duration')
-        self.guid = self.rdb.factory.create('ns1:guid')
-        self.anyType = self.rdb.factory.create('ns1:anyType')
+    def __init__(self, IP = None):
+        self.rdbState = False
+        self.rdbIP = IP
+        try:
+            self.rdb = Client('%s%s%s' % ('http://' , IP ,':9001/docs'))
+            self.ArrayOfCls_point = self.rdb.factory.create('ns0:ArrayOfCls_point')
+            self.ArrayOfCls_point_main = self.rdb.factory.create('ns0:ArrayOfCls_point_main')
+            self.ArrayOfCls_point_main_py = self.rdb.factory.create('ns0:ArrayOfCls_point_main_py')
+            self.ArrayOfKeyValueOfanyTypeanyType = self.rdb.factory.create('ns2:ArrayOfKeyValueOfanyTypeanyType')
+            self.ArrayOfTableAttributes = self.rdb.factory.create('ns0:ArrayOfTableAttributes')
+            self.ArrayOfanyType = self.rdb.factory.create('ns2:ArrayOfanyType')
+            self.ArrayOfint = self.rdb.factory.create('ns2:ArrayOfint')
+            self.ArrayOfstring = self.rdb.factory.create('ns2:ArrayOfstring')
+            self.Cls_point = self.rdb.factory.create('ns0:Cls_point')
+            self.Cls_point_main = self.rdb.factory.create('ns0:Cls_point_main')
+            self.Cls_point_main_py = self.rdb.factory.create('ns0:Cls_point_main_py')
+            self.TableAttributes = self.rdb.factory.create('ns0:TableAttributes')
+            self.char = self.rdb.factory.create('ns1:char')
+            self.duration = self.rdb.factory.create('ns1:duration')
+            self.guid = self.rdb.factory.create('ns1:guid')
+            self.anyType = self.rdb.factory.create('ns1:anyType')
+            self.rdbState = True
+        except BaseException as err:
+            self.rdbState = False
+            return
+        # finally:
+        #     flash(self.rdbState, 'RDB')
 
-    def init_app(self, app):
-        if (
-            '123' not in app.config
-        ):
-            warnings.warn(
-                '123 is not set. '
-                'Defaulting 123 to "http://127.0.0.1:9001/docs".'
-            )
-        app.config.setdefault('123', 'http://127.0.0.1:9001/docs')
+    # def init_app(self, app):
+    #     if (
+    #         '123' not in app.config
+    #     ):
+    #         warnings.warn(
+    #             '123 is not set. '
+    #             'Defaulting 123 to "http://127.0.0.1:9001/docs".'
+    #         )
+    #     app.config.setdefault('123', 'http://127.0.0.1:9001/docs')
         
         #判断表是否存
     def ContainsPointID(self, id):

@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>Table: {{ title }}</h1>
+<h1>{{ title }}</h1>
 <form action="" method="post">
     {{ form.hidden_tag() }}
     <p>
-        {{ form.name.label }}<br>
-        {{ form.name() }}<br>
-        {% for error in form.name.errors %}
+        {{ form.serverIP.label }}<br>
+        {{ form.serverIP() }}<br>
+        {% for error in form.serverIP.errors %}
         <span style="color: red;">[{{ error }}]</span>
         {% endfor %}
     </p>

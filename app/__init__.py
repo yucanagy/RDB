@@ -4,6 +4,6 @@ from app import rdbalchemy
 
 app = Flask(__name__)
 app.config.from_object(Config)
-rdb = rdbalchemy.RDBAlchemy(app)
+rdb = rdbalchemy.RDBAlchemy(Config.RDB_IP)
 
-from app import route   
+from app import route    
